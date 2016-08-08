@@ -73,6 +73,7 @@ public class NewAdapter
         CommandRegistry.set("SET_PLAYER_HEALTH_CALLBACK", "org.drools.minecraft.adapter.cmds.SetPlayerHealthCommand");
         CommandRegistry.set("SET_PLAYER_PARAM_CALLBACK", "org.drools.minecraft.adapter.cmds.SetPlayerParamCommand");
         CommandRegistry.set("CLEAR_PLAYER_INVENTORY_LOGICAL_CALLBACK", "org.drools.minecraft.adapter.cmds.ClearPlayerInventoryLogicalCommand");
+        CommandRegistry.set( "CHANGE_SCORE_CALLBACK", "org.drools.minecraft.adapter.cmds.ChangeScoreCommand" );
         bootstrapWorld();
 
     }
