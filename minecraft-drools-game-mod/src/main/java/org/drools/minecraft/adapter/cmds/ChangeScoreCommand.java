@@ -28,6 +28,8 @@ import org.drools.game.model.api.Player;
 public class ChangeScoreCommand extends BaseCommand<Void> {
     
     private Team team;
+    public static final BlockPos redScorePos = new BlockPos(155, 110, -280);
+    public static final BlockPos blueScorePos = new BlockPos( 209, 110, -272);
     
     public ChangeScoreCommand( Player player, Team team ) {
         super( player );
@@ -52,15 +54,15 @@ public class ChangeScoreCommand extends BaseCommand<Void> {
         
         if(team.getName().equals("red"))
         {
-            startingPos = new BlockPos(155, 110, -280);
+            startingPos = redScorePos;
             blockstate = Blocks.REDSTONE_BLOCK.getDefaultState();
             
         }else if(team.getName().equals("blue"))
         {
-            startingPos = new BlockPos( 209, 110, -272);
+            startingPos = blueScorePos;
             blockstate = Blocks.LAPIS_BLOCK.getDefaultState();
         }
-        
+
         for(int i = 0; i < 3 + team.getPoints(); i++)
         {
             world.setBlockState(startingPos.add(0, i, team.getPoints() * 2), blockstate);
@@ -68,5 +70,4 @@ public class ChangeScoreCommand extends BaseCommand<Void> {
         
         return null;
     }
-
 }

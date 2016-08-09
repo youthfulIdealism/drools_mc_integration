@@ -46,6 +46,7 @@ import org.drools.game.core.api.Context;
 import org.drools.game.core.api.PlayerConfiguration;
 import org.drools.game.model.api.Player;
 import org.drools.game.model.impl.base.BasePlayerImpl;
+import org.drools.minecraft.adapter.cmds.ChangeScoreCommand;
 import org.drools.minecraft.adapter.cmds.ClearPlayerInventoryLogicalCommand;
 import org.kie.api.runtime.rule.FactHandle;
 
@@ -56,9 +57,11 @@ public class NewAdapter
 
     private int throttle = 0;
     private final int maxThrottle = 20;
-
+    private boolean hasSetUpWorld;
+    
     private GameSession game;
 
+    
     public NewAdapter()
     {
         game = new GameSessionImpl();
@@ -75,7 +78,7 @@ public class NewAdapter
         CommandRegistry.set("CLEAR_PLAYER_INVENTORY_LOGICAL_CALLBACK", "org.drools.minecraft.adapter.cmds.ClearPlayerInventoryLogicalCommand");
         CommandRegistry.set( "CHANGE_SCORE_CALLBACK", "org.drools.minecraft.adapter.cmds.ChangeScoreCommand" );
         bootstrapWorld();
-
+        hasSetUpWorld = false;
     }
 
     private void bootstrapWorld()
@@ -110,6 +113,30 @@ public class NewAdapter
 
     private void update(World world) throws ClassNotFoundException, InstantiationException, IllegalAccessException
     {
+        if(!hasSetUpWorld)
+            {
+                if(world.isAreaLoaded(ChangeScoreCommand.blueScorePos, ChangeScoreCommand.redScorePos.add(0, 23, 40) ))
+                {
+                    for(int i = 0; i < 20; i++)
+                    {
+                        for(int a = 0; a < 3 + i; a++)
+                        {
+                            //event.world.setBlockState(ChangeScoreCommand.blueScorePos.add(0, a, i * 2), Blocks.AIR.getDefaultState());
+                            //event.world.setBlockState(ChangeScoreCommand.redScorePos.add(0, a, i * 2), Blocks.AIR.getDefaultState());
+                            //System.out.println(ChangeScoreCommand.redScorePos.add(0, a, i * 2) + " ... " + world.getBlockState(ChangeScoreCommand.redScorePos.add(0, a, i * 2)).getBlock());
+                            world.setBlockToAir(ChangeScoreCommand.blueScorePos.add(0, a, i * 2));
+                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
+                            
+                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
+                            
+                        }
+                    }
+                    hasSetUpWorld = true;
+                }
+            }
+        
+        
+        
         for (String player : game.getPlayers())
         {
             EntityPlayer playerEntity = world.getPlayerEntityByName(player);
@@ -130,16 +157,12 @@ public class NewAdapter
                 }
             }
 
-            //if (playerEntity.inventory.inventoryChanged)
-            //{
             game.execute(new ClearPlayerInventoryLogicalCommand(game.getPlayerByName(player)));
             if (UtilMathHelper.playerPickedTheFlag(playerEntity))
             {
                 Collection<Flag> flags = game.getGameObjects(Flag.class);
                 game.execute(new PickFlagCommand(game.getPlayerByName(player), flags.iterator().next()));
             }
-            //playerEntity.inventory.inventoryChanged = false;
-            //}
             dealWithCallbacks(world);
         }
 
@@ -226,52 +249,4 @@ public class NewAdapter
         }
     }
 
-    /*@SubscribeEvent
-    public void onPlayerDropsItemsDeath(PlayerDropsEvent event)
-    {
-        //Tick model
-        //event.getEntityPlayer().inventory.markDirty();
-
-        //Event model
-        if (UtilMathHelper.playerPickedTheFlag(event.getEntityPlayer()))
-        {
-            Collection<Flag> flags = game.getGameObjects(Flag.class);
-            game.execute(new PickFlagCommand(game.getPlayerByName(event.getEntityPlayer().getName()), flags.iterator().next()));
-            event.getEntityPlayer().inventory.inventoryChanged = false;
-        }
-    }
-
-    @SubscribeEvent
-    public void onPlayerOpenContainer(PlayerOpenContainerEvent event)
-    {
-        //Tick model
-        //event.getEntityPlayer().inventory.markDirty();
-
-        //Event model
-        if (UtilMathHelper.playerPickedTheFlag(event.getEntityPlayer()))
-        {
-            Collection<Flag> flags = game.getGameObjects(Flag.class);
-            game.execute(new PickFlagCommand(game.getPlayerByName(event.getEntityPlayer().getName()), flags.iterator().next()));
-            event.getEntityPlayer().inventory.inventoryChanged = false;
-        }
-
-    }
-
-    @SubscribeEvent
-    public void onPlayerPickUpItem(EntityItemPickupEvent event)
-    {
-        if (event.getEntityPlayer() != null)
-        {
-            //Tick model
-            //event.getEntityPlayer().inventory.markDirty();
-
-            //Event model
-            if (UtilMathHelper.playerPickedTheFlag(event.getEntityPlayer()))
-            {
-                Collection<Flag> flags = game.getGameObjects(Flag.class);
-                game.execute(new PickFlagCommand(game.getPlayerByName(event.getEntityPlayer().getName()), flags.iterator().next()));
-                event.getEntityPlayer().inventory.inventoryChanged = false;
-            }
-        }
-    }*/
 }
