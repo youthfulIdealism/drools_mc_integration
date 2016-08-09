@@ -58,10 +58,9 @@ public class NewAdapter
     private int throttle = 0;
     private final int maxThrottle = 20;
     private boolean hasSetUpWorld;
-    
+
     private GameSession game;
 
-    
     public NewAdapter()
     {
         game = new GameSessionImpl();
@@ -76,7 +75,7 @@ public class NewAdapter
         CommandRegistry.set("SET_PLAYER_HEALTH_CALLBACK", "org.drools.minecraft.adapter.cmds.SetPlayerHealthCommand");
         CommandRegistry.set("SET_PLAYER_PARAM_CALLBACK", "org.drools.minecraft.adapter.cmds.SetPlayerParamCommand");
         CommandRegistry.set("CLEAR_PLAYER_INVENTORY_LOGICAL_CALLBACK", "org.drools.minecraft.adapter.cmds.ClearPlayerInventoryLogicalCommand");
-        CommandRegistry.set( "CHANGE_SCORE_CALLBACK", "org.drools.minecraft.adapter.cmds.ChangeScoreCommand" );
+        CommandRegistry.set("CHANGE_SCORE_CALLBACK", "org.drools.minecraft.adapter.cmds.ChangeScoreCommand");
         bootstrapWorld();
         hasSetUpWorld = false;
     }
@@ -113,30 +112,25 @@ public class NewAdapter
 
     private void update(World world) throws ClassNotFoundException, InstantiationException, IllegalAccessException
     {
-        if(!hasSetUpWorld)
+        if (!hasSetUpWorld)
+        {
+            if (world.isAreaLoaded(ChangeScoreCommand.blueScorePos, ChangeScoreCommand.redScorePos.add(0, 23, 40)))
             {
-                if(world.isAreaLoaded(ChangeScoreCommand.blueScorePos, ChangeScoreCommand.redScorePos.add(0, 23, 40) ))
+                for (int i = 0; i < 20; i++)
                 {
-                    for(int i = 0; i < 20; i++)
+                    for (int a = 0; a < 3 + i; a++)
                     {
-                        for(int a = 0; a < 3 + i; a++)
-                        {
-                            //event.world.setBlockState(ChangeScoreCommand.blueScorePos.add(0, a, i * 2), Blocks.AIR.getDefaultState());
-                            //event.world.setBlockState(ChangeScoreCommand.redScorePos.add(0, a, i * 2), Blocks.AIR.getDefaultState());
-                            //System.out.println(ChangeScoreCommand.redScorePos.add(0, a, i * 2) + " ... " + world.getBlockState(ChangeScoreCommand.redScorePos.add(0, a, i * 2)).getBlock());
-                            world.setBlockToAir(ChangeScoreCommand.blueScorePos.add(0, a, i * 2));
-                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
-                            
-                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
-                            
-                        }
+                        world.setBlockToAir(ChangeScoreCommand.blueScorePos.add(0, a, i * 2));
+                        world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
+
+                        world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
+
                     }
-                    hasSetUpWorld = true;
                 }
+                hasSetUpWorld = true;
             }
-        
-        
-        
+        }
+
         for (String player : game.getPlayers())
         {
             EntityPlayer playerEntity = world.getPlayerEntityByName(player);
