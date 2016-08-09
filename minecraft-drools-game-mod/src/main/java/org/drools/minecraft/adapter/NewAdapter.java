@@ -116,18 +116,33 @@ public class NewAdapter
         {
             if (world.isAreaLoaded(ChangeScoreCommand.blueScorePos, ChangeScoreCommand.redScorePos.add(0, 23, 40)))
             {
-                for (int i = 0; i < 20; i++)
+                if (ChangeScoreCommand.useTickMarks)
                 {
-                    for (int a = 0; a < 3 + i; a++)
+                    for (int i = 0; i < 20; i++)
                     {
-                        world.setBlockToAir(ChangeScoreCommand.blueScorePos.add(0, a, i * 2));
-                        world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
 
-                        world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
+                        for (int a = 0; a < 3 + i; a++)
+                        {
+                            world.setBlockToAir(ChangeScoreCommand.blueScorePos.add(0, a, i * 2));
+                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
 
+                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, a, i * 2));
+
+                        }
+                    }
+                } else
+                {
+                    for (int i = 2; i >= 0; i--)
+                    {
+                        for (int p = 0; p < 15; p++)
+                        {
+                            world.setBlockToAir(ChangeScoreCommand.blueScorePos.add(0, -(p / 3), (3 - i) * 4 + (3 - p % 3)));
+                            world.setBlockToAir(ChangeScoreCommand.redScorePos.add(0, -(p / 3), (3 - i) * 4 + (3 - p % 3)));
+                        }
                     }
                 }
                 hasSetUpWorld = true;
+
             }
         }
 
