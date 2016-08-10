@@ -101,6 +101,10 @@ public class NewAdapter
         initFacts.add(flag);
         Zone chasm = new Zone("Chasm", 141, 80, -310, 260, 62, -199);
         initFacts.add(chasm);
+        Zone speedPowerup = new Zone( "SpeedPowerup", 166, 86, -274, 169, 90, -275 );
+        initFacts.add( speedPowerup );
+        Zone jumpPowerup = new Zone( "JumpPowerup", 198, 86, -279, 195, 90, -277 );
+        initFacts.add( jumpPowerup );
         GameConfiguration config = new BaseGameConfigurationImpl(initFacts, "");
         game.bootstrap(config);
     }
