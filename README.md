@@ -19,3 +19,9 @@ We will be updating this repository with a Minecraft MOD which uses the Rule Eng
 #Issues
 Please feel free to get in touch or report issues about this project.
   
+#Tutorials
+Gamepack setup from scratch:
+https://docs.google.com/document/d/1lC9kcI9RaE3cY_u68ZCnK1iunXsSLFEsudy2EskXlsQ/edit?usp=sharing
+
+Game adapter setup:
+https://docs.google.com/document/d/1wCZKruMex2oPenqSKfw3OE9IACmjniVV7oikSdX7KYk/edit?usp=sharing
