@@ -16,15 +16,17 @@
 
 package org.drools.minecraft.adapter.cmds;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import org.drools.game.core.api.BaseCommand;
 import org.drools.game.core.api.Context;
-import org.drools.game.core.api.GameMessageService;
 import org.drools.game.model.api.Player;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 
+/**
+ * clears the player inventory within the rules.
+ * @author Samuel
+ */
 public class ClearPlayerInventoryLogicalCommand extends BaseCommand<Void> {
 
     public ClearPlayerInventoryLogicalCommand( Player player ) {

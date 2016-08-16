@@ -23,6 +23,10 @@ import org.drools.game.core.api.BaseCommand;
 import org.drools.game.core.api.Context;
 import org.drools.game.model.api.Player;
 
+/**
+ * Teleports the player within Minecraft and resets fallDistance so that the player doesn't die upon teleportation.
+ * @author salaboy
+ */
 public class TeleportPlayerCommand extends BaseCommand<Void> {
 
     private NamedLocation spawn;

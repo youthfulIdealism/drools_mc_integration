@@ -23,9 +23,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.event.entity.player.PlayerDropsEvent;
-import net.minecraftforge.event.entity.player.PlayerOpenContainerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.drools.game.capture.flag.cmds.CommandRegistry;
@@ -48,8 +45,12 @@ import org.drools.game.model.api.Player;
 import org.drools.game.model.impl.base.BasePlayerImpl;
 import org.drools.minecraft.adapter.cmds.ChangeScoreCommand;
 import org.drools.minecraft.adapter.cmds.ClearPlayerInventoryLogicalCommand;
-import org.kie.api.runtime.rule.FactHandle;
 
+/**
+ * Adapter between Minecraft and Drools.
+ * 
+ * @author Samuel
+ */
 public class NewAdapter
 {
 
@@ -80,6 +81,11 @@ public class NewAdapter
         hasSetUpWorld = false;
     }
 
+    /**
+     * Sets up the drools world with scorezones, a flag, powerup zones, etc, etc. These
+     * already exist in the minecraft world if you loaded the correct map. In other words,
+     * performs the first minecraft-rule synchronization.
+     */
     private void bootstrapWorld()
     {
         List initFacts = new ArrayList();
@@ -114,6 +120,15 @@ public class NewAdapter
         return INSTANCE;
     }
 
+    /**
+     * Performs the standard minecraft-drools synchronization pass. This includes
+     * modifying the locations of the flag and players within the rules, and executing any
+     * queued commands.
+     * @param world
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException 
+     */
     private void update(World world) throws ClassNotFoundException, InstantiationException, IllegalAccessException
     {
         //Do minecraft-world setup, and only do it once. In this case, the setup is clearing the score area.
@@ -246,6 +261,10 @@ public class NewAdapter
         }
     }
 
+    /**
+     * Executes all queued commands.
+     * @param world 
+     */
     private void dealWithCallbacks(World world)
     {
         Context callbackCtx = new ContextImpl();

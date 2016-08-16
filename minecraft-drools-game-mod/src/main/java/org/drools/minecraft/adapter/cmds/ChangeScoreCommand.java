@@ -26,22 +26,39 @@ import org.drools.game.core.api.Context;
 import org.drools.game.model.api.Player;
 import org.drools.minecraft.adapter.UtilMathHelper;
 
+/**
+ * Command that changes the scoreboard within minecraft to correctly represent the score.
+ * @author Samuel
+ */
 public class ChangeScoreCommand extends BaseCommand<Void> {
     
     private Team team;
     public static final BlockPos redScorePos = new BlockPos(155, 110, -280);
     public static final BlockPos blueScorePos = new BlockPos( 209, 110, -272);
     
+    /**
+     * 
+     * @param player
+     * @param team 
+     */
     public ChangeScoreCommand( Player player, Team team ) {
         super( player );
         this.team = team;
     }
 
+    /**
+     * gets the team subjected to a score change
+     * @return 
+     */
     public Team getTeam()
     {
         return team;
     }
 
+    /**
+     * sets the team subjected to  a score change
+     * @param team 
+     */
     public void setTeam(Team team)
     {
         this.team = team;

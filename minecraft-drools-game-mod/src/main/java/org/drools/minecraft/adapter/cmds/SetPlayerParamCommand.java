@@ -25,6 +25,10 @@ import org.drools.game.core.api.BaseCommand;
 import org.drools.game.core.api.Context;
 import org.drools.game.model.api.Player;
 
+/**
+ * Applies a PotionEffect to the player within Minecraft.
+ * @author salaboy
+ */
 public class SetPlayerParamCommand extends BaseCommand<Void> {
 
     private static HashMap<String, Integer> effects;

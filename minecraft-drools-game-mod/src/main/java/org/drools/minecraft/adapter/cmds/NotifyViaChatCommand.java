@@ -23,6 +23,10 @@ import org.drools.game.core.api.BaseCommand;
 import org.drools.game.core.api.Context;
 import org.drools.game.model.api.Player;
 
+/**
+ * sends a chat message to a single player within Minecraft.
+ * @author Samuel
+ */
 public class NotifyViaChatCommand extends BaseCommand<Void> {
 
     private String message;

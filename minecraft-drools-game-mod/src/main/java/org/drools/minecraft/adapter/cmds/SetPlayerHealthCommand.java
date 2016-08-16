@@ -22,6 +22,10 @@ import org.drools.game.core.api.BaseCommand;
 import org.drools.game.core.api.Context;
 import org.drools.game.model.api.Player;
 
+/**
+ * Sets the player health.
+ * @author salaboy
+ */
 public class SetPlayerHealthCommand extends BaseCommand<Void> {
 
     private Integer health;

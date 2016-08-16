@@ -22,8 +22,17 @@ import org.drools.game.core.api.BaseCommand;
 import org.drools.game.core.api.Context;
 import org.drools.game.model.api.Player;
 
+/**
+ * command that clears the player inventory in minecraft. This is 
+ * used to ensure that the player
+ * @author salaboy
+ */
 public class ClearPlayerInventoryCommand extends BaseCommand<Void> {
 
+    /**
+     * 
+     * @param player 
+     */
     public ClearPlayerInventoryCommand( Player player ) {
         super( player );
     }
