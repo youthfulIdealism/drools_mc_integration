@@ -1,3 +1,5 @@
+https://salaboy.com/2016/09/29/google-summer-of-code-2016-drools-minecraft-2/
+
 # Minecraft & Drools Game, Capture the Flag
 Game is played by charging to the center of the map, grabbing the flag out of the chest, and racing to the other scorezone. Punching opponents off platforms will result in the opponent respawning at their scorezone... and if they are carrying the flag, it will return to the chest, giving you an opportunity to score.
 
